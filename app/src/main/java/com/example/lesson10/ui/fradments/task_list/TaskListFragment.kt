@@ -2,11 +2,11 @@ package com.example.lesson10.ui.fradments.task_list
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +28,7 @@ class TaskListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        parentFragmentManager.popBackStack()
 
         val fab = view.findViewById<FloatingActionButton>(R.id.add_task_fab)
         fab.setOnClickListener { setNewTaskClickedListener() }
@@ -51,7 +52,7 @@ class TaskListFragment : Fragment() {
 
     private fun setNewTaskClickedListener() {
         val newTaskFragmentToAdd = NewTaskFragment.newInstance()
-        getParentFragmentManager().beginTransaction()
+        parentFragmentManager.beginTransaction()
             .add(R.id.task_list, newTaskFragmentToAdd)
             .addToBackStack("NewTaskFragment")
             .commit()

@@ -14,6 +14,9 @@ import com.example.lesson10.ui.fradments.TaskViewModel
 
 class NewTaskFragment : Fragment() {
     private lateinit var viewModel: TaskViewModel
+    private lateinit var innerViewModel: NewTaskViewModel
+    private var titleInputField: EditText? = null
+    private var detailsInputField: EditText? = null
 
     companion object {
         fun newInstance() = NewTaskFragment()
@@ -29,14 +32,32 @@ class NewTaskFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[TaskViewModel::class.java]
-        val titleInputField: EditText = view.findViewById(R.id.new_title)
-        val detailsInputField: EditText = view.findViewById(R.id.new_details)
+        innerViewModel = ViewModelProvider(requireActivity())[NewTaskViewModel::class.java]
+        titleInputField = view.findViewById(R.id.new_title)
+        detailsInputField = view.findViewById(R.id.new_details)
+
+        activity?.let {
+            innerViewModel.valueToUpdate.observe(it) { task ->
+                titleInputField?.setText(task?.title ?: "")
+                detailsInputField?.setText(task?.details ?: "")
+            }
+        }
+
         val addButton: Button = view.findViewById(R.id.add_task)
         addButton.setOnClickListener {
-            val titLe = titleInputField.text.toString()
-            val details = detailsInputField.text.toString()
-            viewModel.addTask(Task(title = titLe, details = details))
+            val title = titleInputField?.text.toString()
+            val details = detailsInputField?.text.toString()
+            viewModel.addTask(Task(title = title, details = details))
+            innerViewModel.setCurrentData()
             parentFragmentManager.popBackStack()
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        innerViewModel.setCurrentData(
+            titleInputField?.text.toString(),
+            detailsInputField?.text.toString(),
+        )
     }
 }
