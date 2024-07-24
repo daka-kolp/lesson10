@@ -1,6 +1,5 @@
 package com.example.lesson10.ui.fradments.task_list
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
