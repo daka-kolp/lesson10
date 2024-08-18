@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -13,12 +14,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.lesson10.R
 import com.example.lesson10.ui.fradments.TaskViewModel
 import com.example.lesson10.ui.fradments.new_task.NewTaskFragment
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class TaskListFragment : Fragment() {
     private lateinit var viewModel: TaskViewModel
     private var adapter: TasksRecycleViewAdapter? = null
 
+    companion object {
+        fun newInstance() = TaskListFragment()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,6 +33,11 @@ class TaskListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val userEmail = view.findViewById<TextView>(R.id.user_email)
+        val account= GoogleSignIn.getLastSignedInAccount(requireContext())
+        account?.let { userEmail.text = it.email }
+
         parentFragmentManager.popBackStack()
 
         val fab = view.findViewById<FloatingActionButton>(R.id.add_task_fab)

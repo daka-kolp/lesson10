@@ -6,8 +6,8 @@
     tools:context=".ui.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
-        android:name="com.example.lesson10.ui.fradments.task_list.TaskListFragment"
-        android:id="@+id/task_list"
+        android:id="@+id/container"
+        android:name="com.example.lesson10.ui.fradments.splash.SplashFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

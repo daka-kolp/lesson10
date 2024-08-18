@@ -1,14 +1,48 @@
 package com.example.lesson10.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.lesson10.R
+import com.example.lesson10.ui.fradments.task_list.TaskListFragment
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.common.api.ApiException
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnAuthLaunch {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
     }
+
+    override fun launch(intent: Intent) {
+        startActivityForResult(intent, 1)
+    }
+
+    override fun showListFragment() {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.container, TaskListFragment.newInstance())
+            .commit()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 1) {
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            try {
+                val result = task.getResult(ApiException::class.java)
+                showListFragment()
+            } catch (e: ApiException) {
+                Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+}
+
+interface OnAuthLaunch {
+    fun launch(intent: Intent)
+    fun showListFragment()
 }
