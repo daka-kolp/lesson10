@@ -9,7 +9,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.lifecycle.ViewModelProvider
 import com.example.lesson10.R
-import com.example.lesson10.db.Task
+import com.example.lesson10.logic.Task
 import com.example.lesson10.ui.fradments.TaskViewModel
 
 class NewTaskFragment : Fragment() {

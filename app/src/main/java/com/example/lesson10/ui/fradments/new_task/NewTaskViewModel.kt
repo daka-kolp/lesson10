@@ -2,7 +2,7 @@ package com.example.lesson10.ui.fradments.new_task
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.lesson10.db.Task
+import com.example.lesson10.logic.Task
 
 class NewTaskViewModel : ViewModel() {
     val valueToUpdate = MutableLiveData<Task?>(null)

@@ -63,7 +63,7 @@ class TaskListFragment : Fragment() {
     private fun setNewTaskClickedListener() {
         val newTaskFragmentToAdd = NewTaskFragment.newInstance()
         parentFragmentManager.beginTransaction()
-            .add(R.id.task_list, newTaskFragmentToAdd)
+            .add(R.id.container, newTaskFragmentToAdd)
             .addToBackStack("NewTaskFragment")
             .commit()
     }

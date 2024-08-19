@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lesson10.R
-import com.example.lesson10.db.Task
+import com.example.lesson10.logic.Task
 
 class TasksRecycleViewAdapter(var items: MutableList<Task> = mutableListOf()) : RecyclerView.Adapter<TaskViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskViewHolder {
