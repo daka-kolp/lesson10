@@ -33,6 +33,7 @@ class SplashFragment : Fragment() {
         startAnimation(image)
 
         val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken("257353822802-sit9c3q0vsht18t22tqp98js808q2vus.apps.googleusercontent.com")
             .requestEmail()
             .build()
         val context = requireContext()

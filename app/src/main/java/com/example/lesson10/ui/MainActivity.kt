@@ -9,6 +9,8 @@ import com.example.lesson10.R
 import com.example.lesson10.ui.fradments.task_list.TaskListFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
 
 class MainActivity : AppCompatActivity(), OnAuthLaunch {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +36,15 @@ class MainActivity : AppCompatActivity(), OnAuthLaunch {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val result = task.getResult(ApiException::class.java)
-                showListFragment()
+                val credential = GoogleAuthProvider.getCredential(result.idToken, null)
+                val auth = FirebaseAuth.getInstance()
+                auth.signInWithCredential(credential).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        showListFragment()
+                    } else {
+                        Toast.makeText(this, "Auth failed", Toast.LENGTH_SHORT).show()
+                    }
+                }
             } catch (e: ApiException) {
                 Toast.makeText(this, "Error: ${e.message}", Toast.LENGTH_SHORT).show()
             }
